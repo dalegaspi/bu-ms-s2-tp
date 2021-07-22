@@ -5,6 +5,14 @@ CS521 Term Project
 
 - Tkinter
 
+### Running the app
+
+The app should be run as a python module:
+
+```shell
+> python -m imgviewer
+```
+
 ### Install Tkinter libraries on MacOS
 
 if this error is found:
