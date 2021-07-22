@@ -13,6 +13,7 @@ logger = logging.getLogger(__name__)
 
 
 def run():
+    base_controller = BaseController()
     main_view = MainView()
     logger.info("hello from app.main()")
     BaseController.copy_to_clipboard('hello')

@@ -9,7 +9,7 @@ from tkinter import *
 from PIL import ImageTk, Image, ExifTags
 import logging
 
-from imgviewer import ROOT_DIR
+from imgviewer.utils import ROOT_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -32,6 +32,7 @@ class MainView:
         # https://stackoverflow.com/a/24745969/918858
 
         maxsize = (400, 300)
+        logger.info('resizing image...')
         img.thumbnail(maxsize, Image.ANTIALIAS)
 
         pimg = ImageTk.PhotoImage(img)
