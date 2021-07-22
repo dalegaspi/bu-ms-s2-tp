@@ -6,15 +6,26 @@ Term Project
 Application main app that builds the MVC
 """
 from imgviewer.controllers.base import BaseController
+from imgviewer.utils import APP_CONFIG
 from imgviewer.views.main import MainView
 import logging
 
 logger = logging.getLogger(__name__)
 
 
+def dump_configuration():
+    """
+    dumps the app configuration in log
+    :return:
+    """
+    for skey, svalue in APP_CONFIG.items():
+        for key, value in svalue.items():
+            logger.info("%s:%s = %s", skey, key, value)
+
+
 def run():
+    dump_configuration()
     base_controller = BaseController()
     main_view = MainView()
-    logger.info("hello from app.main()")
     BaseController.copy_to_clipboard('hello')
     main_view.run()
