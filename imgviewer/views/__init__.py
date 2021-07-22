@@ -10,3 +10,5 @@ import logging.config
 from imgviewer.utils import ROOT_DIR
 
 logging.config.fileConfig(fname=f'{ROOT_DIR}/imgviewer/config/logging.ini')
+
+

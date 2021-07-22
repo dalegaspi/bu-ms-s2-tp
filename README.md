@@ -7,10 +7,21 @@ CS521 Term Project
 
 ### Running the app
 
-The app should be run as a python module:
+The app should be run as a python module.  The `PYTHONPATH` environment variable so the modules 
 
 ```shell
+> cd imgviewer/
+> export PYTHONPATH=`pwd`
 > python -m imgviewer
+```
+
+### Running the unit tests
+
+Running the unit tests using the standard `unittest` module is no different here.  The unit tests are located in the `/tests` sub-directory and it will discover and automatically run the tests and display the results
+
+```shell
+> cd tests/
+> python -m unittest -v
 ```
 
 ### Install Tkinter libraries on MacOS
