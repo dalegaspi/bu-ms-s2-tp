@@ -7,7 +7,7 @@ Application main app that builds the MVC
 """
 from imgviewer.controllers.base import BaseController
 from imgviewer.utils import APP_CONFIG
-from imgviewer.views.main import MainView
+from imgviewer.views.main import MainView, render_main_view
 import logging
 
 logger = logging.getLogger(__name__)
@@ -26,6 +26,7 @@ def dump_configuration():
 def run():
     dump_configuration()
     base_controller = BaseController()
-    main_view = MainView()
     BaseController.copy_to_clipboard('hello')
-    main_view.run()
+    render_main_view(controller=base_controller)
+
+

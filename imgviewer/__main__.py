@@ -14,3 +14,4 @@ logger = logging.getLogger(__name__)
 if __name__ == "__main__":
     logger.info("app entry point")
     app.run()
+
