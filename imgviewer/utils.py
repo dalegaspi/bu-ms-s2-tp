@@ -7,10 +7,18 @@ Application constants, utils and helpers
 """
 import os
 from configparser import ConfigParser
+from pathlib import Path
 
-# this is the root directory of the module where all other resource paths will be based from
+# this is the root directory of the module
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PATH_ROOT_DIR = Path(ROOT_DIR)
+
+# data directory
+PATH_DATA_ROOT_DIR = PATH_ROOT_DIR / 'imgviewer' / 'data'
+
+# config directory
+PATH_CONFIG_ROOT_DIR = PATH_ROOT_DIR / 'imgviewer' / 'config'
 
 # application configuration
 APP_CONFIG = ConfigParser()
-APP_CONFIG.read(f'{ROOT_DIR}/imgviewer/config/app.ini')
+APP_CONFIG.read(PATH_CONFIG_ROOT_DIR / 'app.ini')

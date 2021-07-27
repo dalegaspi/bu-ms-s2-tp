@@ -67,7 +67,8 @@ class ImageAttributes:
 
         :return:
         """
-        return str('\n'.join([f'{k}: {v}' for k, v in self.attr_dict.items()]))
+        return 'No EXIF Data' if len(self.attr_dict) == 0 \
+            else '\n'.join([f'{k}: {v}' for k, v in self.attr_dict.items()])
 
     def get_formatted_exif(self):
         """

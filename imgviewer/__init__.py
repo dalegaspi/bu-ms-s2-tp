@@ -7,6 +7,7 @@ Initialization of module
 """
 import logging.config
 
-from imgviewer.utils import ROOT_DIR
+from imgviewer.utils import PATH_CONFIG_ROOT_DIR
 
-logging.config.fileConfig(fname=f'{ROOT_DIR}/imgviewer/config/logging.ini')
+PATH_LOGGING_CONFIG = PATH_CONFIG_ROOT_DIR / 'logging.ini'
+logging.config.fileConfig(fname=PATH_LOGGING_CONFIG)
