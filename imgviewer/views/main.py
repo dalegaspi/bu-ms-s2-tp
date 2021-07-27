@@ -15,7 +15,7 @@ from imgviewer.views.image_utils import ImageAttributes
 
 logger = logging.getLogger(__name__)
 
-BACKGROUND_LOGO_IMAGE_PATH = PATH_DATA_ROOT_DIR / 'bg-logo.jpg'
+BACKGROUND_LOGO_IMAGE_PATH = PATH_DATA_ROOT_DIR / 'bg-logo2.jpg'
 
 
 class MainView(tk.Frame):
@@ -95,7 +95,7 @@ class MainView(tk.Frame):
 
         # place the EXIF relative to the image
         # https://stackoverflow.com/a/63625317/918858
-        exif_label.place(in_=img_label, y=10, x=10)
+        # exif_label.place(in_=img_label, y=10, x=10)
 
         self.statusbar = tk.Label(self, text='Ready.', bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -105,6 +105,11 @@ class MainView(tk.Frame):
         rating.pack(side=tk.LEFT, padx=20, pady=20)
         next_button = tk.Button(self, text='Next Image')
         previous_button = tk.Button(self, text='Previous Image')
+
+        # disable for now
+        rating['state'] = 'disabled'
+        next_button['state'] = 'disabled'
+        previous_button['state'] = 'disabled'
 
         next_button.pack(side=tk.RIGHT, padx=2, pady=10)
         previous_button.pack(side=tk.RIGHT, padx=2, pady=10)
