@@ -22,3 +22,11 @@ PATH_CONFIG_ROOT_DIR = PATH_ROOT_DIR / 'imgviewer' / 'config'
 # application configuration
 APP_CONFIG = ConfigParser()
 APP_CONFIG.read(PATH_CONFIG_ROOT_DIR / 'app.ini')
+
+APP_CFG_WIN_DIMENSION = (APP_CONFIG.getint('window', 'width'),
+                         APP_CONFIG.getint('window', 'height'))
+
+APP_CFG_IMG_DIMENSION = (APP_CONFIG.getint('image', 'width'),
+                         APP_CONFIG.getint('image', 'height'))
+
+APP_CFG_WIN_CONFIRM_ON_EXIT = APP_CONFIG.getboolean('app', 'confirmonexit')

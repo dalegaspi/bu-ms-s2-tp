@@ -10,7 +10,8 @@ import tkinter as tk
 from tkinter import messagebox, filedialog
 from PIL import ImageTk, Image
 
-from imgviewer.utils import PATH_DATA_ROOT_DIR
+from imgviewer.utils import PATH_DATA_ROOT_DIR, APP_CFG_WIN_DIMENSION, \
+    APP_CFG_IMG_DIMENSION
 from imgviewer.views.image_utils import ImageAttributes
 
 logger = logging.getLogger(__name__)
@@ -22,15 +23,17 @@ class MainView(tk.Frame):
     """
     Main View/frame
     """
+
     def __init__(self, master, controller):
         tk.Frame.__init__(self, master)
         self.controller = controller
         self.master = master
         self.statusbar = None
-
+        self.img_frame = None
+        self.img_label = None
+        self.exif_label = None
         self.render()
         self.render_menu()
-
 
     def render_menu(self):
         """
@@ -65,37 +68,56 @@ class MainView(tk.Frame):
         self.set_status_bar_text(f'Open directory: {selected_dir}')
         return selected_dir
 
-    def set_status_bar_text(self, str):
-        self.statusbar.config(text=str)
+    def set_status_bar_text(self, status_text):
+        """
+        sets the status bar text
 
-    def render(self):
-        self.master.title('Image Viewer')
-        self.pack(fill=tk.BOTH, expand=1)
+        :param status_text:
+        :return:
+        """
+        self.statusbar.config(text=status_text)
+
+    def _init_img_widget(self):
         path = BACKGROUND_LOGO_IMAGE_PATH
         img = Image.open(path)
 
         # this is a test for resizing
         # https://stackoverflow.com/a/24745969/918858
 
-        maxsize = (800, 600)
+        maxsize = (APP_CFG_IMG_DIMENSION[0], APP_CFG_IMG_DIMENSION[1])
         logger.info('resizing image...')
         img.thumbnail(maxsize, Image.ANTIALIAS)
 
-        img_frame = tk.Frame(self, width=800, height=600)
-        img_frame.pack(fill=tk.BOTH, expand=True)
+        self.img_frame = tk.Frame(self,
+                                  width=APP_CFG_WIN_DIMENSION[0],
+                                  height=APP_CFG_WIN_DIMENSION[1])
+        self.img_frame.pack(fill=tk.BOTH, expand=True)
         pimg = ImageTk.PhotoImage(img)
         img_attr = ImageAttributes(img)
 
-        img_label = tk.Label(img_frame, image=pimg)
-        img_label.image = pimg
-        img_label.pack()
+        self.img_label = tk.Label(self.img_frame, image=pimg)
+        self.img_label.image = pimg
+        self.img_label.pack()
 
-        exif_label = tk.Label(img_frame, text=img_attr.get_formatted_exif(),
-                              justify=tk.LEFT)
+        self.exif_label = tk.Label(self.img_frame,
+                                   text=img_attr.get_formatted_exif(),
+                                   justify=tk.LEFT)
 
         # place the EXIF relative to the image
         # https://stackoverflow.com/a/63625317/918858
         # exif_label.place(in_=img_label, y=10, x=10)
+
+    def set_img(self, img):
+        pimg = ImageTk.PhotoImage(img)
+        img_attr = ImageAttributes(img)
+        self.img_label.image = pimg
+        self.img_label.pack()
+
+    def render(self):
+        self.master.title('Image Viewer')
+        self.pack(fill=tk.BOTH, expand=1)
+
+        self._init_img_widget()
 
         self.statusbar = tk.Label(self, text='Ready.', bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -107,6 +129,7 @@ class MainView(tk.Frame):
         previous_button = tk.Button(self, text='Previous Image')
 
         # disable for now
+        rating.set(3)
         rating['state'] = 'disabled'
         next_button['state'] = 'disabled'
         previous_button['state'] = 'disabled'
@@ -125,7 +148,7 @@ def render_main_view(controller):
     main_view = MainView(root, controller)
 
     # todo: get geometry from config
-    root.geometry('800x700')
+    root.geometry(f'{APP_CFG_WIN_DIMENSION[0]}x{APP_CFG_WIN_DIMENSION[1]}')
 
     # https://www.tutorialspoint.com/how-to-center-a-window-on-the-screen-in-tkinter
     root.eval('tk::PlaceWindow . center')
