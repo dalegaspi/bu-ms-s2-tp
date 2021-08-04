@@ -17,6 +17,7 @@ from imgviewer.views.image_utils import ImageAttributes
 logger = logging.getLogger(__name__)
 
 BACKGROUND_LOGO_IMAGE_PATH = PATH_DATA_ROOT_DIR / 'bg-logo2.jpg'
+DOGE_IMAGE_PATH = PATH_DATA_ROOT_DIR / 'doge.jpg'
 
 
 class MainView(tk.Frame):
@@ -66,6 +67,9 @@ class MainView(tk.Frame):
                                                title='Select Images Directory')
         logger.info("open directory: %s", selected_dir)
         self.set_status_bar_text(f'Open directory: {selected_dir}')
+        doge_img = Image.open(DOGE_IMAGE_PATH)
+        self.set_img(doge_img)
+
         return selected_dir
 
     def set_status_bar_text(self, status_text):
@@ -105,11 +109,12 @@ class MainView(tk.Frame):
 
         # place the EXIF relative to the image
         # https://stackoverflow.com/a/63625317/918858
-        # exif_label.place(in_=img_label, y=10, x=10)
+        self.exif_label.place(in_=self.img_label, y=10, x=10)
 
     def set_img(self, img):
         pimg = ImageTk.PhotoImage(img)
         img_attr = ImageAttributes(img)
+        self.img_label.configure(image=pimg)
         self.img_label.image = pimg
         self.img_label.pack()
 
@@ -118,6 +123,7 @@ class MainView(tk.Frame):
         self.pack(fill=tk.BOTH, expand=1)
 
         self._init_img_widget()
+
 
         self.statusbar = tk.Label(self, text='Ready.', bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -130,9 +136,9 @@ class MainView(tk.Frame):
 
         # disable for now
         rating.set(3)
-        rating['state'] = 'disabled'
-        next_button['state'] = 'disabled'
-        previous_button['state'] = 'disabled'
+        # rating['state'] = 'disabled'
+        # next_button['state'] = 'disabled'
+        # previous_button['state'] = 'disabled'
 
         next_button.pack(side=tk.RIGHT, padx=2, pady=10)
         previous_button.pack(side=tk.RIGHT, padx=2, pady=10)
