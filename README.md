@@ -12,48 +12,45 @@ This is an Image Viewer that allows user to select a directory and display all t
 - Tkinter
 - Pillow
 
+## Code Structure and Dependencies
+
+The application is meant as an exercise rather than a true installable module, hence it is following a much simplified code structure as described in [this RealPython.com article](https://realpython.com/python-application-layouts/#one-off-script).  The required modules/dependencies are in a standard `requirements.txt` file and can be easily installed using `pip`:
+
+```shell
+$ pip install -r requirements.txt
+```
+
 ## Application Design
 
 The application adheres to the principles of the [Model-View-Controller design pattern](https://en.wikipedia.org/wiki/Model–view–controller).  The image entities and the catalog are represented as Model classes, the views/windows/widgets are represented as View classes and are glued together by the Controller classes.
 
 ## Running the Application
 
-### Configuration
+`imageviewer.py` is the application's entry point, it can be run simply in the project's current directory by:
+
+```shell
+$ python imageviewer.py
+```
+
+### Application and Logging Configuration(s)
 
 The application and logging configuration is under the `config/` directory named `app.ini` and `logging.ini`, respectively.
 
-### Dependencies
-
-Make sure you install the dependencies listed in `requirements.txt`.  To install using `pip`:
-
-```shell
-$ pip install -r requirements.txt
-```
-
-The app should be run as a python module.  The `PYTHONPATH` environment variable so the modules 
-
-```shell
-$ cd imgviewer/
-$ export PYTHONPATH=`pwd`
-$ python -m imgviewer
-```
-
 ## Running the unit tests
 
-Running the unit tests using the standard `unittest` module is no different here.  The unit tests are located in the `/tests` sub-directory and it will discover and automatically run the tests and display the results
+Running the unit tests using the standard `unittest` module is no different here.  The unit tests are located `tests.py` but the `unittest` module will discover and automatically run the tests and display the results without having to explicitly specify the unit test file:
 
 ```shell
-$ cd tests/
-$ python -m unittest -v
+$ python -m unittest -v 
 ```
 
 ## Troubleshooting
 
-if this error is displaye while running the app:
+if this error is displayed while running the app:
 
 ```shell
 Traceback (most recent call last):
-  File "/Users/dexter/Projects/CS521/bu-ms-s2-tp/tkinter_test.py", line 8, in <module>
+  File "/.../bu-ms-s2-tp/tkinter_test.py", line 8, in <module>
     from tkinter import *
   File "/Library/Developer/CommandLineTools/Library/Frameworks/Python3.framework/Versions/3.7/lib/python3.7/tkinter/__init__.py", line 36, in <module>
     import _tkinter # If this fails your Python may not be configured for Tk
