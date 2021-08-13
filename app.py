@@ -5,9 +5,9 @@ Date: 07/22/2021
 Term Project
 Application main app that builds the MVC
 """
-from imgviewer.controllers.base import BaseController
-from imgviewer.utils import APP_CONFIG
-from imgviewer.views.main import MainView, render_main_view
+from basecontroller import BaseController
+from constants import APP_CONFIG
+from mainview import render_main_view
 import logging
 
 logger = logging.getLogger(__name__)

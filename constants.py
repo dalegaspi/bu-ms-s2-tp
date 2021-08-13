@@ -10,14 +10,14 @@ from configparser import ConfigParser
 from pathlib import Path
 
 # this is the root directory of the module
-ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 PATH_ROOT_DIR = Path(ROOT_DIR)
 
 # data directory
-PATH_DATA_ROOT_DIR = PATH_ROOT_DIR / 'imgviewer' / 'data'
+PATH_DATA_ROOT_DIR = PATH_ROOT_DIR / 'data'
 
 # config directory
-PATH_CONFIG_ROOT_DIR = PATH_ROOT_DIR / 'imgviewer' / 'config'
+PATH_CONFIG_ROOT_DIR = PATH_ROOT_DIR / 'config'
 
 # application configuration
 APP_CONFIG = ConfigParser()

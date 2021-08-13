@@ -7,7 +7,7 @@ Controller unit tests
 """
 import unittest
 
-from imgviewer.controllers.base import BaseController
+from basecontroller import BaseController
 
 
 class ControllerTests(unittest.TestCase):

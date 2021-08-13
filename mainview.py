@@ -10,9 +10,9 @@ import tkinter as tk
 from tkinter import messagebox, filedialog
 from PIL import ImageTk, Image
 
-from imgviewer.utils import PATH_DATA_ROOT_DIR, APP_CFG_WIN_DIMENSION, \
+from constants import PATH_DATA_ROOT_DIR, APP_CFG_WIN_DIMENSION, \
     APP_CFG_IMG_DIMENSION
-from imgviewer.views.image_utils import ImageAttributes
+from imageattributes import ImageAttributes
 
 logger = logging.getLogger(__name__)
 
