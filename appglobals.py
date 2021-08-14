@@ -30,3 +30,5 @@ app_config_img_dimension = (app_config.getint('image', 'width'),
                             app_config.getint('image', 'height'))
 
 app_config_confirm_on_exit = app_config.getboolean('app', 'confirmonexit')
+
+app_config_ratings_filename = app_config.get('catalog', 'ratingsfilename')

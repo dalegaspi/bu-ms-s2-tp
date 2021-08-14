@@ -103,7 +103,7 @@ class AppState:
     def __str__(self):
         """
         Return application state in human-readable form
-        
+
         :return:
         """
         return 'Application state current_index: {}, ' \

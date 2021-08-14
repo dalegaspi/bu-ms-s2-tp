@@ -31,9 +31,9 @@ class ImageAttributes:
         self.image = image
         # noinspection PyProtectedMember
         self.exif = image._getexif()
-        self._parse_exif()
+        self.__parse_exif()
 
-    def _parse_exif(self):
+    def __parse_exif(self):
         """
         parses exif then stores internally in attr_dict
 
@@ -61,7 +61,7 @@ class ImageAttributes:
                      if v.lower() == attribute_name.lower())
         return index
 
-    def _attr_dict_as_string(self):
+    def __attr_dict_as_string(self):
         """
         return the EXIF as a newline separated key-value pairs
 
@@ -76,4 +76,4 @@ class ImageAttributes:
 
         :return:
         """
-        return str(self._attr_dict_as_string())
+        return str(self.__attr_dict_as_string())

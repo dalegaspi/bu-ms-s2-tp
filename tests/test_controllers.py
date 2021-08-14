@@ -15,17 +15,17 @@ class ControllerTests(unittest.TestCase):
     Tests for controller
     """
 
+    def setUp(self) -> None:
+        """
+        Setup
+
+        :return:
+        """
+        self.controller = BaseController()
+
     def test_creation(self):
         """
         Test creation of controller
         """
-        c = BaseController()
-        self.assertIsNotNone(c)
+        self.assertIsNotNone(self.controller)
 
-    def test_assert(self):
-        """
-        Test assertion
-
-        :return:
-        """
-        self.assertTrue(True)
