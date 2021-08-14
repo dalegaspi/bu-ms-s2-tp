@@ -44,3 +44,6 @@ class ImageCatalogTests(unittest.TestCase):
         """
         img = self.catalog[0]
         self.assertIsNotNone(img)
+
+    def test_save_ratings(self):
+        self.assertTrue(self.catalog.save_ratings())

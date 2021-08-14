@@ -44,6 +44,28 @@ The application and logging configuration is under the `config/` directory named
 $ python -m unittest discover tests -v
 ```
 
+## Project Term Requirements
+
+Below is the table outlining the project term requirements and how they were met:
+
+| Requirement    | Remarks     |
+|----------------|-------------|
+| Dictionary | `ImageCatalog::__image_records` in `imagecatalog.py` is a list of dictionaries |
+| List | `ImageCatalog::__image_records` in `imagecatalog.py` is a list of dictionaries |
+| Set | `ImageCatalog::get_stats()` returns a set with the unique camera brands used to create the images in the catalog in `imagecatalog.py`
+| Tuple | `app_config_win_dimension` and `app_config_img_dimension` global variables defined in `appglobals.py` |
+| Iteration Type | `ImageCatalog::load_ratings()` in `imagecatalog.py`
+| Conditional | `ImageRating::__init__()` in `imagerating.py` |
+| Try-Block with Else Condition | `ImageCatalog::save_ratings()` in `imagecatalog.py` |
+| User-Defined Function | `dump_configuration()` and `run()` in `app.py`|
+| Input/Output File | Use of `_ratings.dat` file in `ImageCatalog` class in `imagecatalog.py`|
+| Class with 1 private, 2 public `self` attributes | `__image_records`, `image_path` and `image_files` in `ImageCatalog` in `imagecatalog.py` |
+| Class with 1 private and 1 public method that take arguments, return values and are used by your program | `ImageCatalog::__apply_ratings()` and `ImageCatalog::set_rating()` in `imagecatalog.py` |
+| Class with `__init__` method that takes at least 1 argument | `ImageCatalog::__init__()` takes a directory `str` as parameter in `imagecatalog.py`
+| Class with `__repr__` method | `ImageCatalog::__repr__()` in `imagecatalog.py` |
+| Magic methods | `ImageCatalog::__len__()`, `ImageCatalog::__getitem__()` in `imagecatalog.py`
+
+
 ## Troubleshooting
 
 if this error is displayed while running the app:

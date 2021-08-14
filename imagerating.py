@@ -19,7 +19,7 @@ class ImageRating:
     The image rating
     """
 
-    def __init__(self, rating=MIN_RATING):
+    def __init__(self, rating: int = MIN_RATING):
         if not ImageRating.__is_valid_rating(rating):
             raise ValueError(
                 'Rating must be between {} and {} inclusive'
@@ -28,8 +28,8 @@ class ImageRating:
         self.__rating = rating
 
     @staticmethod
-    def __is_valid_rating(rating: 0):
-        return ImageRating.MIN_RATING <= rating <= ImageRating.MIN_RATING
+    def __is_valid_rating(rating: int):
+        return ImageRating.MIN_RATING <= rating <= ImageRating.MAX_RATING
 
     def get_rating(self):
         return self.__rating
