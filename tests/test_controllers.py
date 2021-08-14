@@ -7,11 +7,25 @@ Controller unit tests
 """
 import unittest
 
-from imgviewer.controllers.base import BaseController
+from basecontroller import BaseController
 
 
 class ControllerTests(unittest.TestCase):
+    """
+    Tests for controller
+    """
+
+    def setUp(self) -> None:
+        """
+        Setup
+
+        :return:
+        """
+        self.controller = BaseController()
 
     def test_creation(self):
-        c = BaseController()
-        self.assertIsNotNone(c)
+        """
+        Test creation of controller
+        """
+        self.assertIsNotNone(self.controller)
+
