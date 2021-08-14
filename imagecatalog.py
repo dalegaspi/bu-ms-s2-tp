@@ -190,9 +190,20 @@ class ImageCatalog:
                                                   None)
                                    for rec in self.__image_records)
 
-        # remove None in the list
-        unique_camera_brands.remove(None)
+        unique_camera_models = set(rec[K_IMG].get_attributes()
+                                   .attr_dict.get(imageattributes.EXIF_MODEL,
+                                                  None)
+                                   for rec in self.__image_records)
+
+        # remove None in the lists
+        if None in unique_camera_models:
+            unique_camera_brands.remove(None)
+
+        if None in unique_camera_models:
+            unique_camera_models.remove(None)
+
         stats = {'Total Images': len(self.__image_records),
-                 'Camera Brands': unique_camera_brands}
+                 'Camera Brands': unique_camera_brands,
+                 'Camera Models': unique_camera_models}
 
         return stats
