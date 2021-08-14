@@ -46,4 +46,18 @@ class ImageCatalogTests(unittest.TestCase):
         self.assertIsNotNone(img)
 
     def test_save_ratings(self):
+        """
+        test saving of ratings
+
+        :return:
+        """
         self.assertTrue(self.catalog.save_ratings())
+
+    def test_get_stats(self):
+        """
+        statistics test
+
+        :return:
+        """
+        stats = self.catalog.get_stats()
+        self.assertTrue(len(stats) == 2)

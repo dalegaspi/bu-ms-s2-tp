@@ -11,6 +11,7 @@ from pathlib import Path
 
 import appglobals
 from image import Image
+import imageattributes
 from imagerating import ImageRating
 
 logger = logging.getLogger(__name__)
@@ -143,6 +144,7 @@ class ImageCatalog:
         save the ratings
         :return:
         """
+        # we are only going to save the ratings which are non-zero
         non_zero_ratings = list(
             map(lambda mrec: {K_NAME: mrec[K_IMG].get_name(),
                               K_RATING: int(mrec[K_IMG].get_rating())},
@@ -183,5 +185,14 @@ class ImageCatalog:
 
         :return:
         """
-        # todo use set to create the stats
-        pass
+        unique_camera_brands = set(rec[K_IMG].get_attributes()
+                                   .attr_dict.get(imageattributes.EXIF_MAKE,
+                                                  None)
+                                   for rec in self.__image_records)
+
+        # remove None in the list
+        unique_camera_brands.remove(None)
+        stats = {'Total Images': len(self.__image_records),
+                 'Camera Brands': unique_camera_brands}
+
+        return stats
