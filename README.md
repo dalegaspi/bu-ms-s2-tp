@@ -14,7 +14,7 @@ This is an Image Viewer that allows user to select a directory and display all t
 
 ## Code Structure and Dependencies
 
-The application is meant as an exercise rather than a true installable module, hence it is following a much simplified code structure as described in [this RealPython.com article](https://realpython.com/python-application-layouts/#one-off-script).  The required modules/dependencies are in a standard `requirements.txt` file and can be easily installed using `pip`:
+The application is meant as an exercise rather than a true installable module, hence it is following a much simplified code structure as described in [this article](https://realpython.com/python-application-layouts/#one-off-script).  The required modules/dependencies are in a standard `requirements.txt` file and can be easily installed using `pip`:
 
 ```shell
 $ pip install -r requirements.txt
@@ -36,12 +36,12 @@ $ python imageviewer.py
 
 The application and logging configuration is under the `config/` directory named `app.ini` and `logging.ini`, respectively.
 
-## Running the unit tests
+## Unit Testing
 
-Running the unit tests using the standard `unittest` module is no different here.  The unit tests are located `tests.py` but the `unittest` module will discover and automatically run the tests and display the results without having to explicitly specify the unit test file:
+[Running the unit tests using the standard `unittest` module](https://docs.python.org/3/library/unittest.html) is no different here.  The unit tests are located `tests` directory but the `unittest` module will discover and automatically run the tests and display the results without having to explicitly specify the unit test files:
 
 ```shell
-$ python -m unittest -v 
+$ python -m unittest discover tests -v
 ```
 
 ## Troubleshooting

@@ -9,9 +9,9 @@ import app
 import logging.config
 import logging.config
 
-from constants import PATH_CONFIG_ROOT_DIR
+from appglobals import path_config_root_dir
 
-PATH_LOGGING_CONFIG = PATH_CONFIG_ROOT_DIR / 'logging.ini'
+PATH_LOGGING_CONFIG = path_config_root_dir / 'logging.ini'
 logging.config.fileConfig(fname=PATH_LOGGING_CONFIG)
 
 

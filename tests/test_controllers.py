@@ -11,7 +11,21 @@ from basecontroller import BaseController
 
 
 class ControllerTests(unittest.TestCase):
+    """
+    Tests for controller
+    """
 
     def test_creation(self):
+        """
+        Test creation of controller
+        """
         c = BaseController()
         self.assertIsNotNone(c)
+
+    def test_assert(self):
+        """
+        Test assertion
+
+        :return:
+        """
+        self.assertTrue(True)

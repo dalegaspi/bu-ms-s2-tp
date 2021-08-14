@@ -10,14 +10,14 @@ import tkinter as tk
 from tkinter import messagebox, filedialog
 from PIL import ImageTk, Image
 
-from constants import PATH_DATA_ROOT_DIR, APP_CFG_WIN_DIMENSION, \
-    APP_CFG_IMG_DIMENSION
+import appglobals
 from imageattributes import ImageAttributes
+
 
 logger = logging.getLogger(__name__)
 
-BACKGROUND_LOGO_IMAGE_PATH = PATH_DATA_ROOT_DIR / 'bg-logo2.jpg'
-DOGE_IMAGE_PATH = PATH_DATA_ROOT_DIR / 'doge.jpg'
+BACKGROUND_LOGO_IMAGE_PATH = appglobals.path_data_root_door / 'bg-logo2.jpg'
+DOGE_IMAGE_PATH = appglobals.path_data_root_door / 'doge.jpg'
 
 
 class MainView(tk.Frame):
@@ -26,6 +26,12 @@ class MainView(tk.Frame):
     """
 
     def __init__(self, master, controller):
+        """
+        Constructor
+
+        :param master:
+        :param controller:
+        """
         tk.Frame.__init__(self, master)
         self.controller = controller
         self.master = master
@@ -38,7 +44,8 @@ class MainView(tk.Frame):
 
     def render_menu(self):
         """
-        renders the menu
+        Render menu
+
         :return:
         """
         menu_bar = tk.Menu(self.master)
@@ -50,7 +57,8 @@ class MainView(tk.Frame):
 
     def menu_command_quit(self):
         """
-        quits application with confirmation
+        Quit app
+
         :return:
         """
         # todo: processing of confirmation via config
@@ -81,20 +89,26 @@ class MainView(tk.Frame):
         """
         self.statusbar.config(text=status_text)
 
-    def _init_img_widget(self):
+    def __init_img_widget(self):
+        """
+        Image widget init
+
+        :return:
+        """
         path = BACKGROUND_LOGO_IMAGE_PATH
         img = Image.open(path)
 
         # this is a test for resizing
         # https://stackoverflow.com/a/24745969/918858
 
-        maxsize = (APP_CFG_IMG_DIMENSION[0], APP_CFG_IMG_DIMENSION[1])
+        maxsize = (appglobals.app_config_img_dimension[0],
+                   appglobals.app_config_img_dimension[1])
         logger.info('resizing image...')
         img.thumbnail(maxsize, Image.ANTIALIAS)
 
         self.img_frame = tk.Frame(self,
-                                  width=APP_CFG_WIN_DIMENSION[0],
-                                  height=APP_CFG_WIN_DIMENSION[1])
+                                  width=appglobals.app_config_win_dimension[0],
+                                  height=appglobals.app_config_win_dimension[1])
         self.img_frame.pack(fill=tk.BOTH, expand=True)
         pimg = ImageTk.PhotoImage(img)
         img_attr = ImageAttributes(img)
@@ -112,6 +126,12 @@ class MainView(tk.Frame):
         self.exif_label.place(in_=self.img_label, y=10, x=10)
 
     def set_img(self, img):
+        """
+        Set the image in the Main View
+
+        :param img:
+        :return:
+        """
         pimg = ImageTk.PhotoImage(img)
         img_attr = ImageAttributes(img)
         self.img_label.configure(image=pimg)
@@ -119,11 +139,15 @@ class MainView(tk.Frame):
         self.img_label.pack()
 
     def render(self):
+        """
+        Render UI
+
+        :return:
+        """
         self.master.title('Image Viewer')
         self.pack(fill=tk.BOTH, expand=1)
 
-        self._init_img_widget()
-
+        self.__init_img_widget()
 
         self.statusbar = tk.Label(self, text='Ready.', bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
@@ -153,8 +177,9 @@ def render_main_view(controller):
     root = tk.Tk()
     main_view = MainView(root, controller)
 
-    # todo: get geometry from config
-    root.geometry(f'{APP_CFG_WIN_DIMENSION[0]}x{APP_CFG_WIN_DIMENSION[1]}')
+    root.geometry('{}x{}'
+                  .format(appglobals.app_config_win_dimension[0],
+                          appglobals.app_config_win_dimension[1]))
 
     # https://www.tutorialspoint.com/how-to-center-a-window-on-the-screen-in-tkinter
     root.eval('tk::PlaceWindow . center')
