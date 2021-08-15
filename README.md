@@ -22,7 +22,25 @@ $ pip install -r requirements.txt
 
 ## Application Design
 
-The application adheres to the principles of the [Model-View-Controller design pattern](https://en.wikipedia.org/wiki/Model–view–controller).  The image entities and the catalog are represented as Model classes, the views/windows/widgets are represented as View classes and are glued together by the Controller classes.
+The application adheres to the principles of the [Model-View-Controller design pattern](https://en.wikipedia.org/wiki/Model–view–controller).  The image entities and the catalog are represented as Model classes, the views/windows/widgets are represented as View classes and are glued together by the Controller class.
+
+The `MainView` class is where all the GUI-related aspects of the application is written.  This is where all the widgets and their corresponding handlers are defined.
+
+The `ImageCatalog` which takes a directory string as parameter loads the *.jpg files and creates a list of records (dictionary) of `Image` objects.  Each `Image` object has an `ImageRating` for the rating and `ImageAttributes` for the EXIF information.  It also operates on the ratings file that gets loaded when the image catalog is loaded.  
+
+Note that if an image has no rating, it has no entry in the `_ratings.dat` file (to keep the file as small/efficient as possible).  Upon creation of the `Image` object, we call `get_name()` for each and match them with the name on the ratings file; when match is found it is assigned to the image.  This all happens in `ImageCatalog::__apply_ratings` in conjunction with `ImageCatalog::__find_rating()`
+
+The `ImageAttributes` is basically an abstraction on the use of `PIL` library to read the EXIF information and keep just a few of those attributes in a dictionary.
+
+The `ImageRating` is just a simple numerical value between 0 and 5 (inclusive).  However, it's not just a simple `int` because we want to abstract those rules within the class; a simple approach but not to be ignored as we don't want to necessarily have this rule bleed throughout the code--i.e., avoiding those `if` statements to check if the rating is between the intended range.
+
+The `AppController` in conjunction with the `AppState` maintains the isolation between the Models and the View objects.  The `AppController` has reference to the `AppState` instance which in turn has a reference to the `ImageCatalog` class.  You can see in `MainView::menu_open_directory()` handler (when you select Open... in the main menu), the state and catalog objects are initialized and operated on for the rest of the widget handlers.
+
+The `AppState` maintains what image is being viewed (the current image index) on the screen which is why it has more than a few methods operating on the current index, which is basically to traverse through the list of images in the catalog.
+
+It sticks with the pure MVC in the sence that any modification of catalog state are through the controller _only_.
+
+There are also some additional global variables defined in `appglobals.py` which mainly deals with two things: application logging and configuration.
 
 ## Running the Application
 
