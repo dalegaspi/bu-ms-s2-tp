@@ -1,1 +1,1 @@
-python imgviewer.py
+python imageviewer.py
