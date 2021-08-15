@@ -38,7 +38,7 @@ class ImageCatalog:
         self.image_files = \
             list(self.image_path.glob(ImageCatalog.IMAGE_FILESPEC))
         self.__image_records = ImageCatalog.__build_images(self.image_files)
-        logger.info('catalog has loaded {} files.', len(self.image_files))
+        logger.info("catalog has loaded %d files.", len(self.image_files))
         self.__ratings_path = \
             self.image_path / appglobals.app_config_ratings_filename
         self.load_ratings()
@@ -89,8 +89,7 @@ class ImageCatalog:
         load the ratings
         :return:
         """
-        logger.info('loading ratings file from {}'
-                    .format(self.__ratings_path))
+        logger.info("loading ratings file from %s", self.__ratings_path)
 
         ratings = []
         try:
@@ -99,7 +98,7 @@ class ImageCatalog:
                 for row in csv_reader:
                     ratings.append(row)
         except IOError as err:
-            logger.error(f'Unable to load ratings due to error {err}')
+            logger.error("Unable to load ratings due to error %s", err)
             return False
         else:
             self.__apply_ratings(ratings)
@@ -135,9 +134,8 @@ class ImageCatalog:
                 else int(first_or_default[K_RATING])
         except ValueError as err:
             logger.error(
-                'Invalid rating for {} found; returning {} instead'
-                .format(name,
-                        ImageRating.MIN_RATING))
+                "Invalid rating for %s found; returning %d instead",
+                name, ImageRating.MIN_RATING)
             return 0
 
     def save_ratings(self):
@@ -152,9 +150,8 @@ class ImageCatalog:
                 filter(lambda frec: int(frec[K_IMG].get_rating()) != 0,
                        self.__image_records)))
 
-        logger.info('writing {} ratings to {}'
-                    .format(len(non_zero_ratings),
-                            self.__ratings_path))
+        logger.info("writing %d ratings to %s",
+                    len(non_zero_ratings), self.__ratings_path)
 
         try:
             with open(self.__ratings_path, 'w') as csv_file:
@@ -164,7 +161,7 @@ class ImageCatalog:
                 for rec in non_zero_ratings:
                     csv_writer.writerow(rec)
         except IOError as err:
-            logger.error(f'Unable to write ratings due to error {err}')
+            logger.error("Unable to write ratings due to error %s", err)
             return False
         else:
             return True

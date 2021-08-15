@@ -59,3 +59,30 @@ class AppController:
         :return: the app state
         """
         return self.__state
+
+    def next_image(self):
+        """
+        Next image
+
+        :return:
+        """
+        if self.__state.has_catalog():
+            self.__state += 1
+
+    def previous_image(self):
+        """
+        previous image
+
+        :return:
+        """
+        if self.__state.has_catalog():
+            self.__state -= 1
+
+    def get_image_at_current_index(self):
+        """
+        get image at current index
+
+        :return:
+        """
+        if self.__state.has_catalog():
+            return self.__state.get_image_at_current_index()

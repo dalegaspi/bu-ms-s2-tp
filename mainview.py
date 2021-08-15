@@ -5,7 +5,6 @@ Date: 07/22/2021
 Term Project
 Main view/window
 """
-import logging
 import tkinter as tk
 from tkinter import messagebox, filedialog
 from PIL import ImageTk, Image as PILImage
@@ -16,6 +15,9 @@ from appstate import AppState
 from image import Image
 from imageattributes import ImageAttributes
 from imagecatalog import ImageCatalog
+import logging
+
+from imagerating import ImageRating
 
 logger = logging.getLogger(__name__)
 
@@ -42,6 +44,7 @@ class MainView(tk.Frame):
         self.img_frame = None
         self.img_label = None
         self.exif_label = None
+        self.rating_slider = None
         self.exif_label_text = tk.StringVar()
         self.render()
         self.render_menu()
@@ -99,13 +102,14 @@ class MainView(tk.Frame):
         logger.info("open directory: %s", selected_dir)
         self.set_status_bar_text(f'Open directory: {selected_dir}')
         catalog = ImageCatalog(directory=selected_dir)
+        logger.info("")
         new_state = AppState(catalog)
         self.controller.set_state(new_state)
 
         #doge_img = Image.open(DOGE_IMAGE_PATH)
         #self.set_img(doge_img)
 
-        initial_img = self.controller.get_state().get_image_at_current_index()
+        initial_img = self.controller.get_image_at_current_index()
         if initial_img is not None:
             self.set_img(initial_img)
 
@@ -165,15 +169,25 @@ class MainView(tk.Frame):
         :param img:
         :return:
         """
+
+        # load the raw image
         raw_img = img.get_image_object()
         maxsize = (appglobals.app_config_img_dimension[0],
                    appglobals.app_config_img_dimension[1])
         logger.info('resizing image...')
         raw_img.thumbnail(maxsize, PILImage.ANTIALIAS)
 
+        # create the new Tk image object
         pimg = ImageTk.PhotoImage(raw_img)
+
+        # get the image attribute and update the label
         img_attr = img.get_attributes()
         self.exif_label_text.set(img_attr.get_formatted_exif())
+
+        # set the rating slider
+        self.rating_slider.set(int(img.get_rating()))
+
+        # finally update the actual image
         self.img_label.configure(image=pimg)
         self.img_label.image = pimg
         self.img_label.pack()
@@ -189,23 +203,67 @@ class MainView(tk.Frame):
 
         self.__init_img_widget()
 
+        # status bar
         self.statusbar = tk.Label(self, text='Ready.', bd=1,
                                   relief=tk.SUNKEN, anchor=tk.W)
         self.statusbar.pack(side=tk.BOTTOM, fill=tk.X)
 
-        rating = tk.Scale(self, from_=0, to=5, orient=tk.HORIZONTAL)
-        rating.pack(side=tk.LEFT, padx=20, pady=20)
-        next_button = tk.Button(self, text='Next Image')
-        previous_button = tk.Button(self, text='Previous Image')
+        # rating slider
+        self.rating_slider = tk.Scale(self, from_=0, to=5, orient=tk.HORIZONTAL,
+                                      command=self.slider_handle_rating)
+        self.rating_slider.pack(side=tk.LEFT, padx=20, pady=20)
+        self.rating_slider.set(0)
+
+        # navigation buttons
+        next_button = tk.Button(self,
+                                text='Next Image',
+                                command=self.button_next_image)
+        previous_button = tk.Button(self,
+                                    text='Previous Image',
+                                    command=self.button_previous_image)
 
         # disable for now
-        rating.set(3)
+
         # rating['state'] = 'disabled'
         # next_button['state'] = 'disabled'
         # previous_button['state'] = 'disabled'
 
         next_button.pack(side=tk.RIGHT, padx=2, pady=10)
         previous_button.pack(side=tk.RIGHT, padx=2, pady=10)
+
+    def button_next_image(self):
+        """
+        next image button handler
+        :return:
+        """
+        logger.info("next image button pressed")
+        self.controller.next_image()
+        img = self.controller.get_image_at_current_index()
+        if img is not None:
+            self.set_img(img)
+
+    def button_previous_image(self):
+        """
+        next image button handler
+        :return:
+        """
+        logger.info("previous image button pressed")
+        self.controller.previous_image()
+        img = self.controller.get_image_at_current_index()
+        if img is not None:
+            self.set_img(img)
+
+    def slider_handle_rating(self, value):
+        """
+        handling of rating slider
+
+        :return:
+        """
+        logger.info("setting rating slider...")
+        logger.info("current slider setting: %s", value)
+        img = self.controller.get_image_at_current_index()
+        img.set_rating(ImageRating(int(value)))
+        pass
 
 
 def render_main_view(controller):
