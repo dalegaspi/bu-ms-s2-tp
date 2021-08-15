@@ -5,8 +5,9 @@ Date: 07/22/2021
 Term Project
 Application main app that builds the MVC
 """
-from basecontroller import BaseController
+from appcontroller import AppController
 from appglobals import app_config
+from appstate import AppState
 from mainview import render_main_view
 import logging
 
@@ -29,8 +30,9 @@ def run():
     :return:
     """
     dump_configuration()
-    base_controller = BaseController()
-    BaseController.copy_to_clipboard('hello')
-    render_main_view(controller=base_controller)
+    state = AppState()
+    controller = AppController(state)
+    AppController.copy_to_clipboard('hello')
+    render_main_view(controller=controller)
 
 

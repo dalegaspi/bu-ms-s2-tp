@@ -13,6 +13,7 @@ import appglobals
 from image import Image
 import imageattributes
 from imagerating import ImageRating
+from PIL import Image as PILImage
 
 logger = logging.getLogger(__name__)
 
@@ -207,3 +208,13 @@ class ImageCatalog:
                  'Camera Models': unique_camera_models}
 
         return stats
+
+    @staticmethod
+    def get_image_from_record(image_record: dict) -> Image:
+        """
+        convenience method to extract image from an image record
+
+        :param image_record: the image record
+        :return: PIL Image object
+        """
+        return image_record[K_IMG]

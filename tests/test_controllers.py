@@ -7,7 +7,7 @@ Controller unit tests
 """
 import unittest
 
-from basecontroller import BaseController
+from appcontroller import AppController
 
 
 class ControllerTests(unittest.TestCase):
@@ -21,7 +21,7 @@ class ControllerTests(unittest.TestCase):
 
         :return:
         """
-        self.controller = BaseController()
+        self.controller = AppController()
 
     def test_creation(self):
         """

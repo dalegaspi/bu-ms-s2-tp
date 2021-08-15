@@ -7,7 +7,9 @@ Application main app that builds the MVC
 """
 import sys
 
+from image import Image
 from imagecatalog import ImageCatalog
+from PIL import Image as PILImage
 import logging
 
 logger = logging.getLogger(__name__)
@@ -110,3 +112,25 @@ class AppState:
                'max_index: {}, has_catalog: {}'.format(self.get_index(),
                                                        self.get_max_index(),
                                                        self.has_catalog())
+
+    def is_enabled(self):
+        """
+        if the app state has no catalog associated with it, it should be
+        'disabled' state--i.e., the app will not have any of widgets available
+        for interaction
+
+        :return: True if enabled
+        """
+        return self.has_catalog()
+
+    def get_image_at_current_index(self):
+        """
+        return the image at current app state index
+
+        :return:
+        """
+        if self.has_catalog():
+            rec = self.__image_catalog[self.__image_index]
+            return ImageCatalog.get_image_from_record(rec)
+        else:
+            return None
