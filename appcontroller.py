@@ -86,3 +86,12 @@ class AppController:
         """
         if self.__state.has_catalog():
             return self.__state.get_image_at_current_index()
+
+    def save_ratings(self):
+        """
+        save the ratings
+
+        :return:
+        """
+        if self.__state.has_catalog():
+            self.__state.get_catalog().save_ratings()

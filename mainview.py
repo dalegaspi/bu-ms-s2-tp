@@ -74,7 +74,7 @@ class MainView(tk.Frame):
         :return:
         """
         logger.debug('save ratings...')
-        pass
+        self.controller.save_ratings()
 
     def menu_command_quit(self):
         """
@@ -102,12 +102,9 @@ class MainView(tk.Frame):
         logger.info("open directory: %s", selected_dir)
         self.set_status_bar_text(f'Open directory: {selected_dir}')
         catalog = ImageCatalog(directory=selected_dir)
-        logger.info("")
+        logger.info("catalog statistics: %s", catalog.get_stats())
         new_state = AppState(catalog)
         self.controller.set_state(new_state)
-
-        #doge_img = Image.open(DOGE_IMAGE_PATH)
-        #self.set_img(doge_img)
 
         initial_img = self.controller.get_image_at_current_index()
         if initial_img is not None:
@@ -187,6 +184,8 @@ class MainView(tk.Frame):
         # set the rating slider
         self.rating_slider.set(int(img.get_rating()))
 
+        # set the status bar
+        self.set_status_bar_text(f'Current image: {img.get_name().upper()}')
         # finally update the actual image
         self.img_label.configure(image=pimg)
         self.img_label.image = pimg
@@ -221,13 +220,6 @@ class MainView(tk.Frame):
         previous_button = tk.Button(self,
                                     text='Previous Image',
                                     command=self.button_previous_image)
-
-        # disable for now
-
-        # rating['state'] = 'disabled'
-        # next_button['state'] = 'disabled'
-        # previous_button['state'] = 'disabled'
-
         next_button.pack(side=tk.RIGHT, padx=2, pady=10)
         previous_button.pack(side=tk.RIGHT, padx=2, pady=10)
 
