@@ -5,12 +5,10 @@ Date: 07/22/2021
 Term Project
 Application main app that builds the MVC
 """
+import logging
 import sys
 
-from image import Image
 from imagecatalog import ImageCatalog
-from PIL import Image as PILImage
-import logging
 
 logger = logging.getLogger(__name__)
 
