@@ -2,6 +2,8 @@
 
 This project showcases what was learned in CS521 class.  
 
+Code Walkthrough and demo can be found [here](https://youtu.be/_ksMif-4990).
+
 ## Description and Features
 
 This is an Image Viewer that allows user to select a directory and display all the images in said directory in a carousel-like fashion with its EXIF, and be able to optionally rate the images.  the image ratings are saved in a CSV in the same directory where the images are located.
